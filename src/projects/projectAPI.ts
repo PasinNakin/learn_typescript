@@ -60,6 +60,29 @@ const projectAPI = {
                 );
             });
     },
+    put(project: Project) {
+        return fetch(`${url}/${project.id}`, {
+            method: "PUT",
+            body: JSON.stringify(project),
+            headers: {
+                "content-type": "application/json",
+            },
+        })
+            .then(checkStatus)
+            .then(parseJSON)
+            .catch((error: TypeError) => {
+                console.log("log client error" + error);
+                throw new Error(
+                    "ther was an error updating the project please try again."
+                );
+            });
+    },
+    find(id: number) {
+        return fetch(`${url}/${id}`)
+            .then(checkStatus)
+            .then(parseJSON)
+            .then(convertToProjectModel);
+    },
 };
 
 export { projectAPI };
